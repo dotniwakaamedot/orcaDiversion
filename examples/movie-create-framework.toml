@@ -1,0 +1,29 @@
+# Agent が読む元プロジェクト向け例。秘密と認証アカウントは含めない。
+# この値だけで外部操作は許可されず、runner は TOML を読み込まない。
+[project]
+name = "MovieCreateFramework"
+repository = "configure-owner-and-repository"
+base_branch = "main"
+pr_base = "main"
+run_directory = "docs/agent-runs"
+worktree_directory = ".worktrees"
+issue_provider = "github"
+
+[identity]
+auth_provider = "windows-credential-manager"
+
+[issue]
+refining = "status:refining"
+ready = "status:ready"
+in_progress = "status:in-progress"
+awaiting_review = "status:awaiting-review"
+blocked = "status:blocked"
+integration_branch_pattern = "integration/issue-<parent-number>"
+
+[verification]
+test_command = "configure-per-repository"
+
+# このプロジェクトでは別途適用される AGENTS.md が、閉じた Issue と
+# 対応する worktree の整理に未コミット・未追跡・ignored を含める。
+# Issue との対応、所有者、作業終了、絶対パスと内容を事前確認し、
+# 所有不明・使用中は保留する。この例は他の利用先へ権限を移転しない。

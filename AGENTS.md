@@ -64,3 +64,7 @@ Every change must consider these areas:
 ## Git / GitHub
 
 If changing code around `git`, `gh`, source-control, or review behavior read [`docs/agents-md-refs/git-workflow.md`](./docs/agents-md-refs/git-workflow.md).
+
+# AI Workflow
+
+The optional AI collaboration and GitHub Issue workflow is documented in [AI-WORKFLOW.md](./AI-WORKFLOW.md). Follow the existing repository rules and the user's instructions when applying it. The Windows scheduler and GitHub Action are opt-in adapters and are not enabled by copying them.

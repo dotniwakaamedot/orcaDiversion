@@ -1,0 +1,4 @@
+﻿# dv-ignore-version: 1
+# Git ignore rules also apply to Diversion. Keep Git metadata and Python caches local.
+.git/
+__pycache__/

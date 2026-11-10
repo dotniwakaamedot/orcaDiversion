@@ -1,0 +1,46 @@
+name: Close integrated sub-issue
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'integration/issue-*'
+
+permissions:
+  issues: write
+
+jobs:
+  close-sub-issue:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const base = /^integration\/issue-([1-9][0-9]*)$/.exec(pr.base.ref);
+            if (!base) throw new Error('Invalid integration branch name');
+            const matches = [...(pr.body || '').matchAll(/^Sub-issue: #([1-9][0-9]*)\s*$/gm)];
+            if (matches.length !== 1) throw new Error('Exactly one Sub-issue: #number line is required');
+            const parentNumber = Number(base[1]);
+            const issueNumber = Number(matches[0][1]);
+            if (!Number.isSafeInteger(parentNumber) || !Number.isSafeInteger(issueNumber) || parentNumber === issueNumber) {
+              throw new Error('Invalid issue number');
+            }
+            const {owner, repo} = context.repo;
+            const issue = await github.rest.issues.get({owner, repo, issue_number: issueNumber});
+            if (issue.data.pull_request) throw new Error('Sub-issue number refers to a pull request');
+            const parent = await github.request('GET /repos/{owner}/{repo}/issues/{issue_number}/parent', {
+              owner, repo, issue_number: issueNumber,
+              headers: {'X-GitHub-Api-Version': '2022-11-28'}
+            });
+            const expectedRepository = `https://api.github.com/repos/${owner}/${repo}`;
+            if (parent.data.number !== parentNumber || parent.data.repository_url.toLowerCase() !== expectedRepository.toLowerCase()) {
+              throw new Error('Sub-issue parent does not match the integration branch');
+            }
+            if (issue.data.state === 'closed') {
+              core.info(`Issue #${issueNumber} is already closed; no change made`);
+              return;
+            }
+            await github.rest.issues.update({owner, repo, issue_number: issueNumber, state: 'closed', state_reason: 'completed'});
+            core.info(`Closed sub-issue #${issueNumber} after merge of PR #${pr.number} into ${pr.base.ref}`);
