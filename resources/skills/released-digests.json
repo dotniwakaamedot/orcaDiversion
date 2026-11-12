@@ -1,6 +1,10 @@
 {
   "schemaVersion": 1,
   "skills": {
+    "ai-workflow": [
+      "825348a8ebe7bfad0d51a068d62f68fc0423d0544b638305f18070ffd84f3704",
+      "a344d1c7f8d1b528641e6898f82577961abaeac51f726a51749f7286209581f6"
+    ],
     "computer-use": [
       "1b6e39080305dea665ce2c05c4c53ad5b49697db874920dab758d7a5cdc8292c",
       "244b06656c849aaaa79c29a6053fd4c2be98933ca10bd1edaeb727ce73ede793",

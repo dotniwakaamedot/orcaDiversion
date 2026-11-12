@@ -105,6 +105,16 @@ docs/**
 !docs/agents-md-refs/
 !docs/agents-md-refs/**
 !docs/agent-skill-sharing-implementation-checklist.md
+!docs/agent-workflow.md
+!docs/ai-workflow.md
+!docs/ai-workflow-adapters/
+!docs/ai-workflow-adapters/**
+!docs/issue-workflow.md
+!docs/task-cleanup-check.md
+!docs/agent-workflow/
+!docs/agent-workflow/**
+!docs/adapters/
+!docs/adapters/**
 !docs/mobile-terminal-shortcut-bar.md
 
 .stably/*
@@ -161,3 +171,6 @@ ci-shards/
 /.build/windows-native-benchmark/
 
 .local/static-analysis-research/
+
+# Diversion workspace metadata is machine-local.
+/.diversion/

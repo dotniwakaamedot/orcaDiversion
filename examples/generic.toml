@@ -1,0 +1,24 @@
+# Agent が手順を読むための例。実際の権限を付与せず runner は直接読み込まない。
+[project]
+name = "sample"
+repository = "example-owner/example-repository"
+base_branch = "develop"
+pr_base = "develop"
+run_directory = "docs/agent-runs"
+worktree_directory = ".worktrees"
+issue_provider = "github"
+
+[identity]
+auth_provider = "configure-in-environment"
+# 実アカウントや秘密をここに入れない。
+
+[issue]
+refining = "status:refining"
+ready = "status:ready"
+in_progress = "status:in-progress"
+awaiting_review = "status:awaiting-review"
+blocked = "status:blocked"
+integration_branch_pattern = "integration/issue-<parent-number>"
+
+[verification]
+test_command = "configure-per-repository"
