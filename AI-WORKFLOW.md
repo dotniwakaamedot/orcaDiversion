@@ -32,7 +32,7 @@ Test-Path -LiteralPath (Join-Path $skillDestination 'SKILL.md')
 Test-Path -LiteralPath (Join-Path $skillDestination 'references\workflow.md')
 ```
 
-コピー先の親ディレクトリが存在することと書き込み権限を事前に確認する。両方の `Test-Path` が `True` であることを確認し、環境によっては新しいセッションで Skill が認識されることを確認する。Skill は単体で `references/workflow.md` を参照できるが、Agent 定義・Windows runner は含まない。必要ならパッケージの `docs/` と `.codex/agents/`、`adapters/` を別途導入し、既存指示との整合性を確認する。
+コピー先の親ディレクトリが存在することと書き込み権限を事前に確認する。両方の `Test-Path` が `True` であることを確認し、環境によっては新しいセッションで Skill が認識されることを確認する。Skill は共通手順を単体で含むが、Agent 定義・Windows runner は含まない。必要ならパッケージの `docs/` と `.codex/agents/`、`adapters/` を別途導入し、既存指示との整合性を確認する。
 
 ## 更新・戻し方
 
