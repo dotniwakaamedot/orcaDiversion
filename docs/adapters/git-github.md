@@ -10,7 +10,7 @@
 
 ## 親子 Issue 用 Actions
 
-`adapters/github/close-integrated-sub-issue.yml` は利用側の `.github/workflows/` に配置されるまでは動作しない。利用前に対象 repo で Actions の権限、親子 Issue 機能と副作用を確認する。現行実装は `integration/issue-<親番号>` へのマージ済み PR、単独行の `Sub-issue: #<番号>` が1つ、同一リポジトリでの親子関係を検証して sub Issue を close する。既に closed なら変更しない。branch 命名や本文形式の動的な設定には対応しない。未マージ・親不一致等は close しない。Action 結果と Issue を読戻し、未確認を成功扱いしない。
+`docs/ai-workflow-adapters/github/close-integrated-sub-issue.yml` は利用側の `.github/workflows/` に配置されるまでは動作しない。利用前に対象 repo で Actions の権限、親子 Issue 機能と副作用を確認する。現行実装は `integration/issue-<親番号>` へのマージ済み PR、単独行の `Sub-issue: #<番号>` が1つ、同一リポジトリでの親子関係を検証して sub Issue を close する。既に closed なら変更しない。branch 命名や本文形式の動的な設定には対応しない。未マージ・親不一致等は close しない。Action 結果と Issue を読戻し、未確認を成功扱いしない。
 
 自動ドキュメント更新の workflow はこのパッケージの配布対象外であり、上記の Issue close 連携とは別の機能である。
 

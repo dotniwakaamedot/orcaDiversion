@@ -1,7 +1,7 @@
 $ErrorActionPreference='Stop'
 $stage=Split-Path -Parent $PSScriptRoot
-. (Join-Path $stage 'adapters/windows/issue_review_config.ps1')
-. (Join-Path $stage 'adapters/windows/issue_review_task_configuration.ps1')
+. (Join-Path $stage 'docs/ai-workflow-adapters/windows/issue_review_config.ps1')
+. (Join-Path $stage 'docs/ai-workflow-adapters/windows/issue_review_task_configuration.ps1')
 $scratch=Join-Path $env:TEMP ("issue workflow test '"+[guid]::NewGuid().ToString('N'))
 $null=New-Item -ItemType Directory -Path $scratch
 Write-Output ("scratch="+$scratch)
@@ -18,7 +18,7 @@ try {
     'test instructions' | Set-Content -Encoding UTF8 -LiteralPath (Join-Path $repo 'AGENTS.md')
     'test workflow' | Set-Content -Encoding UTF8 -LiteralPath (Join-Path $repo 'docs/agent-workflow.md')
     $codex=(Get-Command powershell.exe).Source
-    $prompt=Join-Path $stage 'adapters/windows/issue-review-prompt.md'
+    $prompt=Join-Path $stage 'docs/ai-workflow-adapters/windows/issue-review-prompt.md'
     $configPath=Join-Path $scratch 'settings.json'
     $valid=@{repo_root=$repo;state_root=(Join-Path $scratch 'state');codex_path=$codex;prompt_path=$prompt;base_branch='main'}
     $valid | ConvertTo-Json | Set-Content -Encoding UTF8 -LiteralPath $configPath
@@ -40,7 +40,7 @@ try {
         if (-not $rejected) { throw ("Invalid config accepted: "+$kind) }
     }
     $valid | ConvertTo-Json | Set-Content -Encoding UTF8 -LiteralPath $configPath
-    $launcher=Join-Path $stage 'adapters/windows/run_issue_review_hidden.py'
+    $launcher=Join-Path $stage 'docs/ai-workflow-adapters/windows/run_issue_review_hidden.py'
     $pythonw=$env:ISSUE_TEST_PYTHONW
     if ([string]::IsNullOrWhiteSpace($pythonw)) { throw 'ISSUE_TEST_PYTHONW must identify a verified windowless interpreter.' }
     Assert-WindowlessPython -PythonwPath $pythonw
@@ -62,7 +62,7 @@ try {
     $rejected=$false
     try { $null=Invoke-IssueReviewTaskWriter -Configuration $t } catch { $rejected=$true }
     if (-not $rejected) { throw 'Missing writer accepted.' }
-    $runner=Join-Path $stage 'adapters/windows/run_issue_review.ps1'
+    $runner=Join-Path $stage 'docs/ai-workflow-adapters/windows/run_issue_review.ps1'
     $output=& powershell.exe -NoProfile -NonInteractive -File $runner -ConfigPath $configPath -Preflight
     if ($LASTEXITCODE -ne 0) { throw 'Preflight failed.' }
     $observed=($output | Out-String | ConvertFrom-Json)
@@ -115,7 +115,7 @@ exit 0
     $valid.base_branch='does-not-exist'
     $valid.state_root=Join-Path $scratch 'registration-state'
     $valid | ConvertTo-Json | Set-Content -Encoding UTF8 -LiteralPath $configPath
-    $register=Join-Path $stage 'adapters/windows/register_issue_review_task.ps1'
+    $register=Join-Path $stage 'docs/ai-workflow-adapters/windows/register_issue_review_task.ps1'
     $injected=@{
         ConfigPath=$configPath; PythonwPath=$pythonw; TaskName='test-task'
         TimeZoneId=[TimeZoneInfo]::Local.Id; StartAt=(Get-Date).AddHours(1)

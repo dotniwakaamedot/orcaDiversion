@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 STAGE = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("launcher", STAGE / "adapters/windows/run_issue_review_hidden.py")
+spec = importlib.util.spec_from_file_location("launcher", STAGE / "docs/ai-workflow-adapters/windows/run_issue_review_hidden.py")
 launcher = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(launcher)
 

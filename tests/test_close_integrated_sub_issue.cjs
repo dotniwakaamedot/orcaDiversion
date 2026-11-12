@@ -2,10 +2,10 @@ const { readFileSync } = require('node:fs')
 const assert = require('node:assert/strict')
 const { test } = require('node:test')
 
-const yaml = readFileSync('adapters/github/close-integrated-sub-issue.yml', 'utf8').replace(
-  /\r\n/g,
-  '\n'
-)
+const yaml = readFileSync(
+  'docs/ai-workflow-adapters/github/close-integrated-sub-issue.yml',
+  'utf8'
+).replace(/\r\n/g, '\n')
 const marker = '          script: |\n'
 assert.ok(yaml.includes(marker))
 const script = yaml

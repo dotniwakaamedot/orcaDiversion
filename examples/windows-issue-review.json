@@ -2,6 +2,6 @@
   "repo_root": "C:\\Projects\\example-repository",
   "state_root": "C:\\Projects\\example-state",
   "codex_path": "C:\\Tools\\codex.ps1",
-  "prompt_path": "C:\\Projects\\example-repository\\adapters\\windows\\issue-review-prompt.md",
+  "prompt_path": "C:\\Projects\\example-repository\\docs\\ai-workflow-adapters\\windows\\issue-review-prompt.md",
   "base_branch": "develop"
 }
